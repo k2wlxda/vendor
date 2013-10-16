@@ -21,4 +21,8 @@
   <spnOverride numeric="46693" spn="東信電訊" />
   <spnOverride numeric="46697" spn="台灣大哥大" />
   <spnOverride numeric="46699" spn="泛亞電信" />
+  <!-- SKT -->
+  <spnOverride numeric="45005" spn=""/>
+  <!-- KT -->
+  <spnOverride numeric="45008" spn=""/>
 </spnOverrides>
