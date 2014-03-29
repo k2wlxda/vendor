@@ -335,3 +335,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 
 -include vendor/cyngn/product.mk
+
+# Enable mini gapps
+MINI_GAPPS := true
+-include vendor/google/gapps_armv6.mk
