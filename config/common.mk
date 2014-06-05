@@ -149,7 +149,8 @@ PRODUCT_PACKAGES += \
     LockClock \
     CMAccount \
     CMHome \
-    HALO
+    HALO \
+    TRDSTheme
 
 # CM Hardware Abstraction Framework
 PRODUCT_PACKAGES += \
