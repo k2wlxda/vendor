@@ -71,7 +71,7 @@ PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
 
 ifneq ($(TARGET_BUILD_VARIANT),eng)
 # Enable ADB authentication
-ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=1
+ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
 endif
 
 # Copy over the changelog to the device
@@ -90,7 +90,47 @@ endif
 # init.d support
 PRODUCT_COPY_FILES += \
     vendor/cm/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner \
-    vendor/cm/prebuilt/common/bin/sysinit:system/bin/sysinit
+    vendor/cm/prebuilt/common/bin/sysinit:system/bin/sysinit \
+    vendor/cm/prebuilt/common/bin/99-backup.sh:system/addon.d/99-backup.sh \
+    vendor/cm/prebuilt/common/etc/backup.conf:system/etc/backup.conf \
+    vendor/cm/prebuilt/common/etc/init.d/00check:system/etc/init.d/00check \
+    vendor/cm/prebuilt/common/etc/init.d/01zipalign:system/etc/init.d/01zipalign \
+    vendor/cm/prebuilt/common/etc/init.d/02sysctl:system/etc/init.d/02sysctl \
+    vendor/cm/prebuilt/common/etc/init.d/03firstboot:system/etc/init.d/03firstboot \
+    vendor/cm/prebuilt/common/etc/init.d/05freemem:system/etc/init.d/05freemem \
+    vendor/cm/prebuilt/common/etc/init.d/06removecache:system/etc/init.d/06removecache \
+    vendor/cm/prebuilt/common/etc/init.d/07fixperms:system/etc/init.d/07fixperms \
+    vendor/cm/prebuilt/common/etc/init.d/09cron:system/etc/init.d/09cron \
+    vendor/cm/prebuilt/common/etc/init.d/10sdboost:system/etc/init.d/10sdboost \
+    vendor/cm/prebuilt/common/etc/init.d/11battery:system/etc/init.d/11battery \
+    vendor/cm/prebuilt/common/etc/init.d/12touch:system/etc/init.d/12touch \
+    vendor/cm/prebuilt/common/etc/init.d/13minfree:system/etc/init.d/13minfree \
+    vendor/cm/prebuilt/common/etc/init.d/14gpurender:system/etc/init.d/14gpurender \
+    vendor/cm/prebuilt/common/etc/init.d/15sleepers:system/etc/init.d/15sleepers \
+    vendor/cm/prebuilt/common/etc/init.d/16journalism:system/etc/init.d/16journalism \
+    vendor/cm/prebuilt/common/etc/init.d/17sqlite3:system/etc/init.d/17sqlite3 \
+    vendor/cm/prebuilt/common/etc/init.d/18wifisleep:system/etc/init.d/18wifisleep \
+    vendor/cm/prebuilt/common/etc/init.d/19iostats:system/etc/init.d/19iostats \
+    vendor/cm/prebuilt/common/etc/init.d/20setrenice:system/etc/init.d/20setrenice \
+    vendor/cm/prebuilt/common/etc/init.d/21tweaks:system/etc/init.d/21tweaks \
+    vendor/cm/prebuilt/common/etc/init.d/24speedy_modified:system/etc/init.d/24speedy_modified \
+    vendor/cm/prebuilt/common/etc/init.d/25loopy_smoothness_tweak:system/etc/init.d/25loopy_smoothness_tweak \
+    vendor/cm/prebuilt/common/etc/init.d/98tweaks:system/etc/init.d/98tweaks \
+    vendor/cm/prebuilt/common/etc/helpers.sh:system/etc/helpers.sh \
+    vendor/cm/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
+    vendor/cm/prebuilt/common/etc/init.d.cfg:system/etc/init.d.cfg \
+    vendor/cm/prebuilt/common/etc/cron/cron.daily/00drop_caches:system/etc/cron/cron.daily/00drop_caches \
+    vendor/cm/prebuilt/common/etc/cron/cron.daily/01clear_cache:system/etc/cron/cron.daily/01clear_cache \
+    vendor/cm/prebuilt/common/etc/cron/cron.hourly/00drop_caches:system/etc/cron/cron.hourly/00drop_caches \
+    vendor/cm/prebuilt/common/etc/cron/cron.hourly/01clear_cache:system/etc/cron/cron.hourly/01clear_cache \
+    vendor/cm/prebuilt/common/etc/cron/cron.weekly/00drop_caches:system/etc/cron/cron.weekly/00drop_caches \
+    vendor/cm/prebuilt/common/etc/cron/cron.weekly/01clear_cache:system/etc/cron/cron.weekly/01clear_cache \
+    vendor/cm/prebuilt/common/etc/cron/cron.conf:system/etc/cron/cron.conf
+    
+# Added xbin files
+PRODUCT_COPY_FILES += \
+    vendor/cm/prebuilt/common/xbin/zip:system/xbin/zip \
+    vendor/cm/prebuilt/common/xbin/zipalign:system/xbin/zipalign
 
 # userinit support
 PRODUCT_COPY_FILES += \
@@ -304,6 +344,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.modversion=$(CM_VERSION) \
   ro.cmlegal.url=http://www.cyanogenmod.org/docs/privacy
 
+# Add AOGP version
+
+COSMIC_VERSION_MAJOR = 4.7
+COSMIC_VERSION_MINOR = stable
+VERSION := $(COSMIC_VERSION_MAJOR)_$(COSMIC_VERSION_MINOR)
+COSMIC_VERSION := $(VERSION)_$(shell date +%Y%m%d-%H%M%S)
+
 -include vendor/cm-priv/keys/keys.mk
 
 CM_DISPLAY_VERSION := $(CM_VERSION)
@@ -338,5 +385,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 -include vendor/cyngn/product.mk
 
 # Enable mini gapps
-MINI_GAPPS := true
--include vendor/google/gapps_armv6.mk
+# MINI_GAPPS := true
+# -include vendor/google/gapps_armv6.mk
